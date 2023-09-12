@@ -1,0 +1,14 @@
+Nhóm 5: Xây dựng ứng dụng quản lý cửa hàng thức ăn nhanh
+
+Danh sách thành viên
+3121414017 - Nguyễn Ngọc Sang
+3121410146 - Nguyễn Thành Đạt
+3121560033 - Nguyễn Trương Khánh Hoàng
+3121410425 - Nguyễn Ngọc Sơn
+
+Danh sách tài khoản: 
+user - pass
+6942 - 123
+6943 - 12345
+6944 - 123
+6945 - 123
