@@ -680,7 +680,7 @@ public class StaffForm extends JPanel {
                 }
                 if (_fields[i].getName().split("_")[1].equals("numberPhone")) {
                     
-                    if (!Validate.checkNumber(data[i].toString())) {
+                    if (!Validate.checkSDT(data[i].toString())) {
                         flag = true;
                         
                         JOptionPane.showMessageDialog(null, "Invalid phone number");
@@ -715,7 +715,6 @@ public class StaffForm extends JPanel {
                 flag = true;
             }
             if (!flag) {
-                System.out.println("1");
                 _Controller.update(_staff);
                 _staff = _Controller.getOne(_staff.getID());
                 Object[] rowData = _staff.data();
@@ -741,8 +740,7 @@ public class StaffForm extends JPanel {
         if (modal.show() == 1) {
 //            isEdit = false;
             Object[] data = new Object[_fields.length];
-            
-            System.out.println("Delete");
+
             for (int i = 0; i < _InfoList.size(); i++) {
                 data[i] = _InfoList.get(i).getData();
                 
@@ -763,7 +761,6 @@ public class StaffForm extends JPanel {
             Object[] data = new Object[_fields.length];
             boolean flag = false;
             boolean t = false;
-//            System.out.println("Save");
             for (int i = 0; i < _InfoList.size(); i++) {
                 if (_InfoList.get(i).getData() != null) {
                     data[i] = _InfoList.get(i).getData().trim();
@@ -821,7 +818,6 @@ public class StaffForm extends JPanel {
                 
                 _staff = new StaffDTO(data);
             } catch (Exception e) {
-                System.out.println(e);
                 JOptionPane.showMessageDialog(null, "Invalid data");
                 flag = true;
             }

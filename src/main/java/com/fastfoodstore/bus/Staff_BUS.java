@@ -32,6 +32,10 @@ public class Staff_BUS {
         return _dbStaff.selectAll();
     }
 
+    public ArrayList<StaffDTO> getAll1() {
+        return _dbStaff.selectAll1();
+    }
+
     public ArrayList<DutyDTO> getAllDutyDTOs() {
 
         return _dbDuty.selectAll();

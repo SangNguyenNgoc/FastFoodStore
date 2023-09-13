@@ -568,11 +568,12 @@ public class PackForm extends JPanel {
                                     JOptionPane.INFORMATION_MESSAGE);
                         }
                     } else {
-                        IngredientDTO Ingre = new IngredientDTO(ingredientId.getText(),
-                                ingredientName.getText(),
-                                Integer.parseInt(ingredientAmount.getText()),
-                                Integer.parseInt(ingredientPrice.getText()));
+
                         try {
+                            IngredientDTO Ingre = new IngredientDTO(ingredientId.getText(),
+                                    ingredientName.getText(),
+                                    Integer.parseInt(ingredientAmount.getText()),
+                                    Integer.parseInt(ingredientPrice.getText()));
                             IngredientBUS.update(Ingre);
                             System.out.println(Ingre.getCost());
                             JFrame frame = new JFrame("JOptionPane showMessageDialog example");

@@ -109,6 +109,8 @@ public class StaffDAO implements DAOInterface<StaffDTO> {
         return change;
     }
 
+
+
     @Override
     public ArrayList<StaffDTO> selectAll() {
         ArrayList<StaffDTO> staffList = new ArrayList<StaffDTO>();
@@ -126,7 +128,7 @@ public class StaffDAO implements DAOInterface<StaffDTO> {
                     + "duty.dutyName as duty,"
                     + "staff.status "
                     + "FROM staff "
-                    + "JOIN duty ON staff.dutyCode = duty.dutyCode WHERE status != '1'";
+                    + "JOIN duty ON staff.dutyCode = duty.dutyCode where status != '1'";
             PreparedStatement pst = connection.prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
 
@@ -454,4 +456,49 @@ public class StaffDAO implements DAOInterface<StaffDTO> {
         }
     }
 
+    public ArrayList<StaffDTO> selectAll1() {
+        ArrayList<StaffDTO> staffList = new ArrayList<StaffDTO>();
+        boolean isData = false;
+
+        try {
+            Connection connection = ConnectionData.getConnection();
+            String sql
+                    = "SELECT staff.id,"
+                    + "staff.name,"
+                    + "staff.email,"
+                    + "staff.numberPhone,"
+                    + "staff.address,"
+                    + "staff.birthday,"
+                    + "duty.dutyName as duty,"
+                    + "staff.status "
+                    + "FROM staff "
+                    + "JOIN duty ON staff.dutyCode = duty.dutyCode";
+            PreparedStatement pst = connection.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                StaffDTO data = new StaffDTO(
+                        rs.getString("id"),
+                        rs.getString("name"),
+                        rs.getString("email"),
+                        rs.getString("numberPhone"),
+                        rs.getString("address"),
+                        rs.getDate("birthday"),
+                        rs.getString("duty"),
+                        rs.getBoolean("status")
+                );
+                staffList.add(data);
+                isData = true;
+            }
+            ConnectionData.closeConnection(connection);
+        } catch (Exception e) {
+            System.out.println("Select data failture" + e);
+        }
+
+        if (isData) {
+            return staffList;
+        } else {
+            return null;
+        }
+    }
 }

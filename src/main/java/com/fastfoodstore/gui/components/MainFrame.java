@@ -106,6 +106,8 @@ public class MainFrame extends JFrame {
                                 getContentPanel().repaint();
                                 leftMenu.getListMenu().clean();
                                 staff = null;
+                                OrderForm order = new OrderForm(staff);
+                                setForm(order);
                             }
                             break;
                         case "EXIT":

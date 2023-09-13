@@ -56,7 +56,7 @@ public class AccountForm extends JPanel {
 
     private void initComponent() {
         this.accList = AccountBUS.getAccount(0);
-        this.staffList = new Staff_BUS().getAll();
+        this.staffList = new Staff_BUS().getAll1();
         setLayout(null);
 
         String[] cols = {"STT", "ID tài khoản", "Tên nhân viên", "Chức vụ", "Trạng thái"};

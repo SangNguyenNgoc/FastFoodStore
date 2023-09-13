@@ -319,7 +319,7 @@ public class OrderForm extends JPanel {
 
     public void setHomePageButton() {
         this.homePageButton = new Button("Trang chủ", 100, 30, ProjectUtil.getMyGreenColor());
-        homePageButton.setBounds(320, 220, 90, 30);
+        homePageButton.setBounds(420, 220, 90, 30);
         homePageButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
