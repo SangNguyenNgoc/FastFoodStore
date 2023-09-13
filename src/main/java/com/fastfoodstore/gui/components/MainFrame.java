@@ -91,6 +91,8 @@ public class MainFrame extends JFrame {
                                 leftMenu.setStaff("ID: " + staff.getID() + " | " + staff.getDutyCode()); 
                                 getContentPanel().removeAll();
                                 getContentPanel().repaint();
+                                OrderForm order = new OrderForm(staff);
+                                setForm(order);
                             } else {
                                 leftMenu.getListMenu().clean();
                             }
@@ -117,6 +119,8 @@ public class MainFrame extends JFrame {
             }
 
         });
+        OrderForm orderForm = new OrderForm(staff);
+        setForm(orderForm);
         setVisible(true);
     }
 
