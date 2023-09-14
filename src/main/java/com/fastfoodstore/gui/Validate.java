@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
 public class Validate {
 
     private static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
-    private static final String SDT_REGEX = "^0[3|5|7|8|9]\\d{8}$";
+    private static final String SDT_REGEX = "^0[3|5|7|8|9|6]\\d{8}$";
 
     public static boolean isValidEmail(String email) {
         return email.matches(EMAIL_REGEX);

@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFCell;
@@ -354,24 +356,25 @@ public class StaffDAO implements DAOInterface<StaffDTO> {
     public void ImportExcelDatabase(File file) {
         try {
             Connection connection = ConnectionData.getConnection();
-
+            DataFormatter formatter = new DataFormatter();
             FileInputStream in = new FileInputStream(file);
             XSSFWorkbook workbook = new XSSFWorkbook(in);
             XSSFSheet sheet = workbook.getSheetAt(0);
             Row row;
-            for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+            System.out.println( sheet.getLastRowNum());
+            for (int i = 1; i < sheet.getLastRowNum(); i++) {
                 row = sheet.getRow(i);
-                String id = row.getCell(0).getStringCellValue();
-                String name = row.getCell(1).getStringCellValue();
-                String email = row.getCell(2).getStringCellValue();
-                String phoneNumber = row.getCell(3).getStringCellValue();
-                String address = row.getCell(4).getStringCellValue();
+                System.out.println(row);
+                String id = formatter.formatCellValue(row.getCell(0));
+                String name = formatter.formatCellValue(row.getCell(1));
+                String email = formatter.formatCellValue(row.getCell(2));
+                String phoneNumber = formatter.formatCellValue(row.getCell(3));
+                String address = formatter.formatCellValue(row.getCell(4));
                 java.sql.Date birthday = Date.valueOf(row.getCell(5).getStringCellValue());
-                String dutyName = row.getCell(6).getStringCellValue();
+                String dutyName = formatter.formatCellValue(row.getCell(6));
 
                 String duty_sql = "SELECT * FROM duty where dutyName LIKE ?";
                 PreparedStatement dty = connection.prepareStatement(duty_sql);
-                System.out.println(dutyName);
                 dty.setString(1, dutyName);
 
                 ResultSet dutyResultSet = dty.executeQuery();
@@ -379,10 +382,8 @@ public class StaffDAO implements DAOInterface<StaffDTO> {
                 String dutyCode = "";
                 while (dutyResultSet.next()) {
                     dutyCode = dutyResultSet.getString("dutyCode");
-                    System.out.println(dutyCode);
 
                 }
-                System.err.println("1");
 
                 String sql_check = "SELECT * FROM staff WHERE id = ?";
 
@@ -403,7 +404,7 @@ public class StaffDAO implements DAOInterface<StaffDTO> {
                     a.setBirthday(birthday);
                     a.setDutyCode(dutyCode);
                     a.setEmail(email);
-                    a.setNumberPhone(dutyCode);
+                    a.setNumberPhone(phoneNumber);
                     a.setStatus(false);
                     update(a);
                     AccountDTO b = selectAccount(id);

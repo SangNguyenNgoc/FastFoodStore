@@ -78,7 +78,6 @@ public class ListItem extends JPanel {
             }
             s+="</body></html>";
             gbc.insets = new Insets(2, 2, 2, 2);
-            System.out.println(s);
             label.setText(s);
             add(label, gbc);
             

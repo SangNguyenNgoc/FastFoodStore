@@ -25,8 +25,7 @@ public class ConnectionData {
             String password = "";
             
             c = DriverManager.getConnection(url, userName, password);
-            
-//            System.out.println("Connect successfully");
+
             
         } catch (Exception e) {
             

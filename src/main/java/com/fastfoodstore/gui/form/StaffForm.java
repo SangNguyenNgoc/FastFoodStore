@@ -476,8 +476,6 @@ public class StaffForm extends JPanel {
                 if (result == JFileChooser.APPROVE_OPTION) {
                     File file = fc.getSelectedFile(); //Lấy URL
                     _Controller.ImportExcel(file);
-//                    spBUS.listSP();
-//                    outModel(model, spBUS.getList());
                     JOptionPane.showMessageDialog(null, "Import Success");
                 }
             }
@@ -779,7 +777,7 @@ public class StaffForm extends JPanel {
                     }
                     if (_fields[i].getName().split("_")[1].equals("numberPhone")) {
                         
-                        if (!Validate.checkNumber(data[i].toString())) {
+                        if (!Validate.checkSDT(data[i].toString())) {
                             flag = true;
                             
                             JOptionPane.showMessageDialog(null, "Invalid phone number");
@@ -798,9 +796,9 @@ public class StaffForm extends JPanel {
                     if (_fields[i].getName().split("_")[1].equals("id")) {
                         StaffDTO a = _Controller.getOne(data[i].toString());
                         if (a != null) {
-//                            flag = true;
-//                            System.out.println("1222");
-                            t = true;
+flag = true;
+                             JOptionPane.showMessageDialog(null, "Already had this id in database");
+//                            t= true;
                             
                         }
                         
