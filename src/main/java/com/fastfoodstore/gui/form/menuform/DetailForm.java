@@ -22,6 +22,9 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
@@ -72,6 +75,11 @@ public class DetailForm extends JDialog {
     private JFileChooser imgChooser;
     private JLabel imgLabel;
     private Button chooseButton;
+
+    private Button fixButton;
+
+    private DefaultListModel<String> model;
+    private JList<String> detailJList;
 
     public DetailForm(JFrame parent, String title, ProductsDTO data) {
         super(parent, "Chi tiết sản phẩm", true);
@@ -292,8 +300,8 @@ public class DetailForm extends JDialog {
         panel.add(detailLabel);
         
         ArrayList<String> detailList = ComboBUS.getDetail(combo.getComboCode());
-        DefaultListModel<String> model = new DefaultListModel<>();
-        JList<String> detailJList = new JList<>(model);
+        model = new DefaultListModel<>();
+        detailJList = new JList<>(model);
         for (String item : detailList) {
             model.addElement(item);
         }
@@ -302,6 +310,16 @@ public class DetailForm extends JDialog {
         detailPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         detailPane.setBounds(90, 415, 240, 60);
         panel.add(detailPane);
+
+        fixButton = new Button("Thêm/Xóa sản phẩm của combo", 200, 30, Color.decode("#333333"));
+        fixButton.setBounds(70, 485, 200, 30);
+        fixButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                fixProduct();
+            }
+        });
+        panel.add(fixButton);
 
         this.imgChooser = new JFileChooser();
         this.imgLabel = new JLabel();
@@ -567,6 +585,34 @@ public class DetailForm extends JDialog {
                 "Thành công!",
                 JOptionPane.INFORMATION_MESSAGE
         );
+    }
+
+    public void fixProduct() {
+        String result = JOptionPane.showInputDialog(null, "Nhập mã sản phẩm: ");
+        ProductsDTO data = ProductsBUS.getProductsByCode(result);
+        if(data == null && result != null) {
+            JOptionPane.showMessageDialog(null,"Không tìm thấy sản phẩm.");
+        } else {
+            if(result != null) {
+                Boolean detail = ComboBUS.getDetail(combo.getComboCode()).stream()
+                        .map(e -> e.split("-")[0])
+                        .anyMatch(e -> e.equals(result));
+                if(detail) {
+                    ComboBUS.deleteByProduct(result, combo.getComboCode());
+                    JOptionPane.showMessageDialog(null,"Xóa thành công.");
+                } else {
+                    ComboBUS.insertDetailCombo(combo.getComboCode(), List.of(result));
+                    JOptionPane.showMessageDialog(null,"Thêm thành công.");
+                }
+                detailJList.removeAll();
+                model.removeAllElements();
+                ArrayList<String> detailList = ComboBUS.getDetail(combo.getComboCode());
+                for (String item : detailList) {
+                    model.addElement(item);
+                }
+                detailJList.repaint();
+            }
+        }
     }
     
 }

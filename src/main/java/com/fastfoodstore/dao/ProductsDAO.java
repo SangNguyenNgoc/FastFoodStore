@@ -174,6 +174,43 @@ public class ProductsDAO implements DAOInterface<ProductsDTO>{
         }
     }
 
+    public ProductsDTO selectByIdInoreCase(String id) {
+
+        ProductsDTO product = new ProductsDTO();
+        boolean isData = false;
+
+        try {
+            Connection connection = ConnectionData.getConnection();
+            String sql = "SELECT * FROM products WHERE products.productCode = ?";
+            PreparedStatement pst = connection.prepareStatement(sql);
+            pst.setString(1, id);
+            ResultSet rs = pst.executeQuery();
+
+            if(rs.next()) {
+                product.setProductCode(id);
+                product.setProductName(rs.getString("productName"));
+                product.setProductPrice(rs.getInt("productPrice"));
+                product.setProductSize(rs.getString("productSize").charAt(0));
+                product.setProductImage(rs.getString("productImage"));
+                product.setGroupCode(rs.getString("groupCode"));
+                product.setInMenu(rs.getInt("inMenu"));
+                isData = true;
+            }
+
+            ConnectionData.closeConnection(connection);
+
+        } catch (Exception e) {
+
+            System.out.println("Select data failture " + e);
+        }
+
+        if(isData) {
+            return product;
+        } else {
+            return null;
+        }
+    }
+
     @Override
     public ArrayList<ProductsDTO> selectByCondition(String condition, String colName) {
         

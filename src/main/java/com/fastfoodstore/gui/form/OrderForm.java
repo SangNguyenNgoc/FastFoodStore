@@ -329,30 +329,6 @@ public class OrderForm extends JPanel {
         });
     }
 
-//    public void setPromoButton() {
-//        this.promoButton = new Button("Khuyến mãi", 100, 30, ProjectUtil.getMyGreenColor());
-//        promoButton.setBounds(420, 220, 90, 30);
-//        promoButton.addMouseListener(new MouseAdapter() {
-//            @Override
-//            public void mouseClicked(MouseEvent e) {
-//                ConFirmForm conFirmForm = new ConFirmForm();
-//                String p = conFirmForm.show2();
-//                ArrayList<PromotionsDTO> pList = BillBUS.getAllPromo();
-//                boolean find = false;
-//                for(PromotionsDTO a : pList) {
-//                    if(a.getPromoCode().equals(p)) {
-//                        billDetailPanel.getBill().setPromoCode(p);
-//                        find = true;
-//                        showMes();
-//                    }
-//                }
-//                if(!find) {
-//                    showError("Mã không hợp lệ.");
-//                }
-//            }
-//        });
-//    }
-
     public void setBackButton() {
         this.backButton = new Button("Quay lại", 100, 30, ProjectUtil.getMyGreenColor());
         backButton.setBounds(520, 220, 90, 30);

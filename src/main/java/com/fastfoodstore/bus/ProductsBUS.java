@@ -28,6 +28,10 @@ public class ProductsBUS {
         return ProductsDAO.getInstance().selectById(code);
     }
 
+    public static ProductsDTO getProductsByCodeInoreCase(String code) {
+        return ProductsDAO.getInstance().selectByIdInoreCase(code);
+    }
+
     public static int updateProduct(ProductsDTO t) {
         return ProductsDAO.getInstance().update(t);
     }

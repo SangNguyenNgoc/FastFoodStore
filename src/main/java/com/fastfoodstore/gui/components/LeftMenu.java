@@ -43,11 +43,15 @@ public class LeftMenu extends JPanel {
     public void setData(String code) {
         listMenu.removeData();
         ArrayList<FunctionsDTO> functionList = FunctionsBUS.getGroupFunctionList(code);
-        for (FunctionsDTO item : functionList) {
-            listMenu.addItem(item);
+        if(functionList != null) {
+            for (FunctionsDTO item : functionList) {
+                listMenu.addItem(item);
+            }
         }
-        if (code.equals("DUTY05")) {
-            listMenu.addItem(new FunctionsDTO("FUNC00", "Staff Only", "./icon/settings.png"));
+        if (code.equals("DUTY06")) {
+            listMenu.addItem(new FunctionsDTO("FUNC00", "Đăng nhập", "./icon/settings.png"));
+        } else if (code.equals("DUTY05")) {
+
         } else {
             listMenu.addItem(new FunctionsDTO("FUNC000", "Đăng xuất", "./icon/settings.png"));
         }

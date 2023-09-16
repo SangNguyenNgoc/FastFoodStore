@@ -12,6 +12,7 @@ import com.fastfoodstore.dto.ComboDetailDTO;
 import com.fastfoodstore.dto.ProductsDTO;
 import com.fastfoodstore.gui.ProjectUtil;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -31,6 +32,10 @@ public class ComboBUS {
         return ComboDAO.getInstance().selectById(code);
     }
 
+    public static ComboDTO getComboByCodeInoreCase(String code) {
+        return ComboDAO.getInstance().selectByIdInoreCase(code);
+    }
+
     public static int updateCombo(ComboDTO t) {
         return ComboDAO.getInstance().update(t);
     }
@@ -43,12 +48,13 @@ public class ComboBUS {
         ArrayList<ComboDetailDTO> a = ComboDetailDAO.getInstance().selectByCondition(" where comboCode = '" + code + "'", "");
         ArrayList<String> result = new ArrayList<>();
         for (ComboDetailDTO b : a) {
-            result.add(ProductsBUS.getProductsByCode(b.getProductCode()).getProductName());
+            result.add(b.getProductCode() + "-" +
+                    ProductsBUS.getProductsByCode(b.getProductCode()).getProductName().split("/")[0]);
         }
         return result;
     }
 
-    public static int insertDetailCombo(String comboCode, ArrayList<String> p) {
+    public static int insertDetailCombo(String comboCode, List<String> p) {
         int k = 0;
         for (String a : p) {
             k = ComboDetailDAO.getInstance().insert(new ComboDetailDTO(comboCode, a));
@@ -61,14 +67,14 @@ public class ComboBUS {
     
      public static int delete(ComboDTO t) {
         if (BillDetailBUS.getComboSale(t.getComboCode()) == 0) {
-            int d = ComboBUS.delete2(t.getComboCode());
+            int d = ComboBUS.deletebyCombo(t.getComboCode());
             int k = ComboDAO.getInstance().delete(t);
             if (k != 0) {
                 ProjectUtil.deleteImg(t.getComboImage());
             }
             return k;
         } else {
-            int d = ComboBUS.delete2(t.getComboCode());
+            int d = ComboBUS.deletebyCombo(t.getComboCode());
             t.setInSys(false);
             int k = ComboDAO.getInstance().update(t);
             if (k != 0) {
@@ -83,8 +89,14 @@ public class ComboBUS {
                 + "WHERE `combodetail`.`productCode` = '" + pCode + "'";
         return ComboDetailDAO.getInstance().delete(sql);
     }
+
+    public static int deleteByProduct(String pCode, String cCode) {
+        String sql = "DELETE FROM combodetail "
+                + "WHERE `combodetail`.`productCode` = '" + pCode + "'";
+        return ComboDetailDAO.getInstance().delete(sql);
+    }
     
-    public static int delete2(String cCode) {
+    public static int deletebyCombo(String cCode) {
         String sql = "DELETE FROM combodetail "
                 + "WHERE `combodetail`.`comboCode` = '" + cCode + "'";
         return ComboDetailDAO.getInstance().delete(sql);

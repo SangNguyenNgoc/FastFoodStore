@@ -165,6 +165,39 @@ public class ComboDAO implements DAOInterface<ComboDTO> {
         }
     }
 
+    public ComboDTO selectByIdInoreCase(String id) {
+        ComboDTO combo = new ComboDTO();
+        boolean isData = false;
+
+        try {
+            Connection connection = ConnectionData.getConnection();
+            String sql = "SELECT * FROM combo WHERE comboCode = ?";
+            PreparedStatement pst = connection.prepareStatement(sql);
+            pst.setString(1, id);
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                combo.setComboCode(rs.getString("comboCode"));
+                combo.setComboName(rs.getString("comboName"));
+                combo.setComboPrice(rs.getInt("comboPrice"));
+                combo.setNumberOfProduct(rs.getInt("numberOfProduct"));
+                combo.setComboImage(rs.getString("comboImage"));
+                combo.setGroupCode(rs.getString("groupCode"));
+                combo.setInMenu(rs.getBoolean("inMenu"));
+                isData = true;
+            }
+            ConnectionData.closeConnection(connection);
+        } catch (Exception e) {
+            System.out.println("Select data failture" + e);
+        }
+
+        if (isData) {
+            return combo;
+        } else {
+            return null;
+        }
+    }
+
     @Override
     public ArrayList<ComboDTO> selectByCondition(String condition, String colName) {
         ArrayList<ComboDTO> comboList = new ArrayList<ComboDTO>();

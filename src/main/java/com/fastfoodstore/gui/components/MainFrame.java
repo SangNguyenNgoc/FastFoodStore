@@ -39,7 +39,8 @@ public class MainFrame extends JFrame {
         this.contentPanel = contentPanel;
     }
 
-    public MainFrame() {
+    public MainFrame(StaffDTO s) {
+        setStaff(s);
         initComponent();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setBackground(new Color(0, 0, 0, 0));
@@ -100,8 +101,8 @@ public class MainFrame extends JFrame {
                         case "FUNC000":
                             ComFirmForm2 a = new ComFirmForm2("đăng xuất");
                             if (a.show() != 0) {
-                                leftMenu.setDutyCode("DUTY05");
-                                leftMenu.setStaff("Guest"); 
+                                leftMenu.setDutyCode("DUTY06");
+                                leftMenu.setStaff("POS");
                                 getContentPanel().removeAll();
                                 getContentPanel().repaint();
                                 leftMenu.getListMenu().clean();
@@ -121,9 +122,20 @@ public class MainFrame extends JFrame {
             }
 
         });
-        OrderForm orderForm = new OrderForm(staff);
-        setForm(orderForm);
+        if (staff != null) {
+            leftMenu.setDutyCode(DutyBUS.getDutyCodeByName(staff.getDutyCode()));
+            leftMenu.setStaff("ID: " + s.getID() + " | " + staff.getDutyCode());
+            OrderForm order = new OrderForm(staff);
+            setForm(order);
+        } else {
+            OrderForm order = new OrderForm(null);
+            setForm(order);
+        }
         setVisible(true);
+    }
+
+    public void setStaff(StaffDTO staff) {
+        this.staff = staff;
     }
 
     private void initComponent() {

@@ -82,7 +82,7 @@ public class BillForm extends JPanel {
     private ArrayList<BillDetail2DTO> billDetails2;
 
     private JScrollPane rightScrollPane;
-    private BillDetailList billDetailList;
+    private BillDetailList<?> billDetailList;
 
     private Button exButton;
     private Button printButton;
@@ -296,14 +296,14 @@ public class BillForm extends JPanel {
         billDetailList.addItem(new BillDetailItem("Tên sản phẩm", "Giá tiền"));
         if (billDetails1 != null) {
             for (BillDetailDTO a : billDetails1) {
-                String name = ProductsBUS.getProductsByCode(a.getProductCode()).getProductName().split("/")[0];
+                String name = ProductsBUS.getProductsByCodeInoreCase(a.getProductCode()).getProductName().split("/")[0];
                 BillDetailItem b = new BillDetailItem(a.getAmountProduct() + "x " + name, ProjectUtil.toMoney(a.getPrice() * a.getAmountProduct()));
                 billDetailList.addItem(b);
             }
         }
         if (billDetails2 != null) {
             for (BillDetail2DTO a : billDetails2) {
-                String name = ComboBUS.getComboByCode(a.getComboCode()).getComboName().split("/")[0];
+                String name = ComboBUS.getComboByCodeInoreCase(a.getComboCode()).getComboName().split("/")[0];
                 BillDetailItem b = new BillDetailItem(a.getAmountCombo() + "x " + name, ProjectUtil.toMoney(a.getPrice() * a.getAmountCombo()));
                 billDetailList.addItem(b);
             }
@@ -415,7 +415,7 @@ public class BillForm extends JPanel {
         tableContent.addCell(getTextContentPdfRight("Price", 10));
         if (billDetails1 != null) {
             for (BillDetailDTO a : billDetails1) {
-                String name = ProductsBUS.getProductsByCode(a.getProductCode()).getProductName().split("/")[1];
+                String name = ProductsBUS.getProductsByCodeInoreCase(a.getProductCode()).getProductName().split("/")[1];
                 tableContent.addCell(getTextContentPdfLeft(a.getAmountProduct() + "x " + name, 8));
                 tableContent.addCell(getTextContentPdfRight(ProjectUtil.toMoney(a.getPrice() * a.getAmountProduct()), 8));
             }
@@ -423,7 +423,7 @@ public class BillForm extends JPanel {
 
         if (billDetails2 != null) {
             for (BillDetail2DTO a : billDetails2) {
-                String name = ComboBUS.getComboByCode(a.getComboCode()).getComboName().split("/")[1];
+                String name = ComboBUS.getComboByCodeInoreCase(a.getComboCode()).getComboName().split("/")[1];
                 tableContent.addCell(getTextContentPdfLeft(a.getAmountCombo() + "x " + name, 8));
                 tableContent.addCell(getTextContentPdfRight(ProjectUtil.toMoney(a.getPrice() * a.getAmountCombo()), 8));
             }

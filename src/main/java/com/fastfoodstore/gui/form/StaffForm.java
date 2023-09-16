@@ -796,7 +796,7 @@ public class StaffForm extends JPanel {
                     if (_fields[i].getName().split("_")[1].equals("id")) {
                         StaffDTO a = _Controller.getOne(data[i].toString());
                         if (a != null) {
-flag = true;
+                            flag = true;
                              JOptionPane.showMessageDialog(null, "Already had this id in database");
 //                            t= true;
                             

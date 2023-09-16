@@ -362,7 +362,7 @@ public class StaffDAO implements DAOInterface<StaffDTO> {
             XSSFSheet sheet = workbook.getSheetAt(0);
             Row row;
             System.out.println( sheet.getLastRowNum());
-            for (int i = 1; i < sheet.getLastRowNum(); i++) {
+            for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                 row = sheet.getRow(i);
                 System.out.println(row);
                 String id = formatter.formatCellValue(row.getCell(0));

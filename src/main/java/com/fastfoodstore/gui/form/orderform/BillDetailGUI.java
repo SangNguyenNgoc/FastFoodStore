@@ -17,18 +17,12 @@ import com.fastfoodstore.gui.form.ComFirmForm2;
 import com.fastfoodstore.gui.form.NoticeForm;
 import com.fastfoodstore.gui.item.Button;
 import com.fastfoodstore.gui.item.ScrollBar;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
+import javax.swing.*;
 
 public class BillDetailGUI extends JPanel {
 
@@ -54,6 +48,8 @@ public class BillDetailGUI extends JPanel {
 
     private BillsDTO bill;
     private StaffDTO staff;
+
+    ConFirmBill conFirmBill = new ConFirmBill(this);
 
     private Font f = new Font("Segoe UI Semibold", Font.PLAIN, 12);
 
@@ -104,11 +100,7 @@ public class BillDetailGUI extends JPanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 if (!billList.isEmpty()) {
-                    ComFirmForm2 comFirmForm2 = new ComFirmForm2("thanh toán");
-                    int result = comFirmForm2.show();
-                    if (result == 1) {
-                        finishOrder();
-                    }
+                    conFirmBill.show(bill, billList);
                 }
             }
 

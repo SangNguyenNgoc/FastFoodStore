@@ -68,6 +68,8 @@ public class ProjectUtil {
     public static Color getMyGrayColor() {
         return Color.decode("#eeeeee");
     }
+
+    public static Color getMyYellowColor() { return Color.decode("#FFFF00"); }
     
     public static Color getMyOrangeColor() {
         return Color.decode("#F1A259");
