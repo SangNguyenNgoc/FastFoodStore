@@ -132,10 +132,6 @@ public class StaffForm extends JPanel {
         
         _TableBox = new JPanel(new BorderLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-//        gbc.fill = GridBagConstraints.FIRST_LINE_START;
-//        gbc.gridx = 1;
-//        gbc.gridy = 0;
-//        gbc.gridwidth = 3;
 
         gbc.gridx = 2;
         gbc.gridy = 0;
@@ -143,7 +139,6 @@ public class StaffForm extends JPanel {
         gbc.gridwidth = 1;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
-//        _TableBox.setBackground(Color.red);
         add(_TableBox, gbc);
         _TableBox.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(10, 10, 10, 10), new LineBorder(Color.WHITE, 1, true)));
         _TableBox.setBackground(Color.WHITE);
@@ -156,11 +151,9 @@ public class StaffForm extends JPanel {
         _MenuBox = new JPanel();
         
         _InfoViewBox = new JPanel();
-//        _InfoViewBox.setBackground(Color.YELLOW);
 
         gbc.gridx = 0;
         gbc.gridy = 0;
-//        gbc.gridwidth = 3;
 
         add(leftJPanel, gbc);
         
@@ -305,7 +298,6 @@ public class StaffForm extends JPanel {
         resultList.setBounds(120, 40, 26 * 15, 80);
         _SearchBox.add(search);
         search.setBounds(120, 12, 26 * 15, 30);
-//        _SearchBox.add(searchButton);
         _SearchBox.setBorder(new EmptyBorder(2, 2, 2, 2));
         _SearchBox.setBackground(Color.WHITE);
         
@@ -352,7 +344,6 @@ public class StaffForm extends JPanel {
                         _InfoList.get(i).isEditable(false);
                         
                     }
-//                    _InfoList.get(i).setText(_fields[i].getName().split("_")[1], );
                 }
                 isCreate = false;
                 updateCard(_InfoViewBox, blankdata);
@@ -382,7 +373,6 @@ public class StaffForm extends JPanel {
                         _InfoList.get(i).isEditable(true);
                         
                     }
-//                    _InfoList.get(i).isEditable(true);
                 }
                 _EditBox.setVisible(true);
                 _MenuBox.setVisible(false);
@@ -493,7 +483,6 @@ public class StaffForm extends JPanel {
         _MenuBox.setVisible(false);
         createStaffInfo(_InfoViewBox);
 
-//               this.pack();
     }
     
     public void createStaffTable(ArrayList<StaffDTO> args, GridBagConstraints gbc, JPanel TableBox) {
@@ -598,11 +587,8 @@ public class StaffForm extends JPanel {
                         data[i] = _StaffTable.getValueAt(row, i);
                         
                     }
-//                System.out.println(row);
                     UIManager.put("ToolTip.background", Color.white);
                     UIManager.put("Tooltip.font", new Font("Roboto", Font.PLAIN, 10));
-//                UIManager.put("ToolTip.border", new LineBorder(Color.BLACK,1,true));
-//                System.out.println(data[0]);
                     AccountDTO a = _Controller.getStaffAccount(data[0].toString());
                     String tooltipText = "<html>"
                             + "    <div style=\"display:flex;flex-direction:column;gap:1.6rem;justify-content:center;\">\n"
@@ -612,7 +598,6 @@ public class StaffForm extends JPanel {
                             + "        <h3 style=\"font-family:San-serif;font-size:12pt\">◾  <b style=\"font-size:16pt;color:#212529\"> 📞:</b> " + data[3] + "</h3>\n";
                     
                     if (a != null) {
-//                    tooltipText += "        <h3 style=\"font-family:San-serif;font-size:12pt\">" + a.getStatus() + "</h3>\n";
                         tooltipText += "        <h3 style=\"font-family:San-serif;font-size:12pt\"> Account: <b style=\"color:#40c057\">✔</b> It's registered under staff id: " + data[0] + "</h3>\n";
                         
                     } else {
@@ -664,13 +649,11 @@ public class StaffForm extends JPanel {
             isEdit = false;
             Object[] data = new Object[_fields.length];
             Boolean flag = false;
-            System.out.println("Save");
             for (int i = 0; i < _InfoList.size(); i++) {
                 data[i] = _InfoList.get(i).getData();
                 if (_fields[i].getName().split("_")[1].equals("birthday")) {
                     
                     if (!Validate.checkDay(data[i].toString())) {
-                        System.out.println(data[i].toString());
                         flag = true;
                         JOptionPane.showMessageDialog(null, "Invalid Date");
                         
@@ -772,8 +755,7 @@ public class StaffForm extends JPanel {
                     }
                     
                     if (_fields[i].getName().split("_")[1].equals("name")) {
-                        
-                        System.out.println(data[i] + "|||||||||||");
+
                     }
                     if (_fields[i].getName().split("_")[1].equals("numberPhone")) {
                         

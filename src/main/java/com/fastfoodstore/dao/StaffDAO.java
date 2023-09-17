@@ -341,11 +341,9 @@ public class StaffDAO implements DAOInterface<StaffDTO> {
             for (int colNum = 0; colNum < row.getLastCellNum(); colNum++) {
                 sheet.autoSizeColumn((short) (colNum));
             }
-            System.out.println(file.getPath());
             FileOutputStream out = new FileOutputStream(new File(file.getPath() + "/Staff.xlsx"));
             workbook.write(out);
             out.close();
-            System.out.println("Xuat file thanh cong");
 
         } catch (SQLException | IOException ex) {
             System.out.println(ex);
@@ -361,16 +359,13 @@ public class StaffDAO implements DAOInterface<StaffDTO> {
             XSSFWorkbook workbook = new XSSFWorkbook(in);
             XSSFSheet sheet = workbook.getSheet("Staff_M");
             Row row;
-            System.out.println( sheet.getLastRowNum());
             for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                 row = sheet.getRow(i);
-//                System.out.println(row);
                 String id = formatter.formatCellValue(row.getCell(0));
                 String name = formatter.formatCellValue(row.getCell(1));
                 String email = formatter.formatCellValue(row.getCell(2));
                 String phoneNumber = formatter.formatCellValue(row.getCell(3));
                 String address = formatter.formatCellValue(row.getCell(4));
-                System.out.println(formatter.formatCellValue(row.getCell(5)));
                 java.sql.Date birthday = Date.valueOf(formatter.formatCellValue(row.getCell(5)));
                 String dutyName = formatter.formatCellValue(row.getCell(6));
 
@@ -413,39 +408,6 @@ public class StaffDAO implements DAOInterface<StaffDTO> {
 
                     }
                 }
-//                if (!rs.next()) {
-//                    rs.getString("name");
-//                    String sql = "INSERT INTO `staff` (`id`, `name`, `email`, `numberPhone`, `address`, `birthday`, `dutyCode`, `status`)"
-//                            + " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-//                    PreparedStatement pst = connection.prepareStatement(sql);
-//
-//                    pst.setString(1, id);
-//                    pst.setString(2, name);
-//                    pst.setString(3, email);
-//                    pst.setString(4, phoneNumber);
-//                    pst.setString(5, address);
-//                    pst.setDate(6, birthday);
-//                    pst.setString(7, dutyCode);
-//                    pst.setBoolean(8, Boolean.FALSE);
-//
-//                    ResultSet rs_check = pst.executeQuery();
-//
-//                } else {
-//                    String sql = "UPDATE `staff`"
-//                            + " SET `id` = ?, `name` = ?, `email` = ?, `numberPhone` = ?, `address` = ?, `birthday` = ?, `dutyCode` = ?"
-//                            + " WHERE `staff`.`id` = ?";
-//                    PreparedStatement pst = connection.prepareStatement(sql);
-//                    pst.setString(1, rs.getString("id"));
-//                    pst.setString(2, rs.getString("name"));
-//                    pst.setString(3, rs.getString("email"));
-//                    pst.setString(4, rs.getString("numberPhone"));
-//                    pst.setString(5, rs.getString("address"));
-//                    pst.setDate(6, birthday);
-//                    pst.setString(7, dutyCode);
-//                    pst.setString(8, id);
-//
-//                    ResultSet rs_check = pst.executeQuery();
-//                }
             }
             in.close();
 
@@ -453,6 +415,7 @@ public class StaffDAO implements DAOInterface<StaffDTO> {
             System.err.println(ex);
         } catch (IOException | SQLException ex) {
             System.err.println(ex);
+        } catch (IllegalArgumentException e) {
 
         }
     }
