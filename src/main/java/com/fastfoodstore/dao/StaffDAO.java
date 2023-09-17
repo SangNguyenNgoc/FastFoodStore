@@ -359,18 +359,19 @@ public class StaffDAO implements DAOInterface<StaffDTO> {
             DataFormatter formatter = new DataFormatter();
             FileInputStream in = new FileInputStream(file);
             XSSFWorkbook workbook = new XSSFWorkbook(in);
-            XSSFSheet sheet = workbook.getSheetAt(0);
+            XSSFSheet sheet = workbook.getSheet("Staff_M");
             Row row;
             System.out.println( sheet.getLastRowNum());
             for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                 row = sheet.getRow(i);
-                System.out.println(row);
+//                System.out.println(row);
                 String id = formatter.formatCellValue(row.getCell(0));
                 String name = formatter.formatCellValue(row.getCell(1));
                 String email = formatter.formatCellValue(row.getCell(2));
                 String phoneNumber = formatter.formatCellValue(row.getCell(3));
                 String address = formatter.formatCellValue(row.getCell(4));
-                java.sql.Date birthday = Date.valueOf(row.getCell(5).getStringCellValue());
+                System.out.println(formatter.formatCellValue(row.getCell(5)));
+                java.sql.Date birthday = Date.valueOf(formatter.formatCellValue(row.getCell(5)));
                 String dutyName = formatter.formatCellValue(row.getCell(6));
 
                 String duty_sql = "SELECT * FROM duty where dutyName LIKE ?";
@@ -387,7 +388,6 @@ public class StaffDAO implements DAOInterface<StaffDTO> {
 
                 String sql_check = "SELECT * FROM staff WHERE id = ?";
 
-                System.err.println(id);
                 PreparedStatement pst_check = connection.prepareStatement(sql_check);
                 pst_check.setString(1, id);
                 ResultSet rs = pst_check.executeQuery();
